@@ -1,0 +1,83 @@
+@layer reset {
+  *, *::before, *::after { 
+    box-sizing: border-box; 
+}
+  * { 
+    margin: 0; 
+}
+
+  /* respeita quem pediu menos movimento no sistema */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* âncora não fica escondida atrás do cabeçalho grudado */
+    scroll-padding-top: var(--esp-5);
+  }
+
+
+  /* tipografia fluida: nunca menor que 1.75rem, nunca maior que 3rem */
+  h1 { 
+    font-size: clamp(1.75rem, 4vw + 1rem, 3rem); 
+    line-height: 1.1; 
+}
+  h2 { 
+    font-size: clamp(1.35rem, 2vw + .8rem, 2rem); 
+    line-height: 1.2; 
+}
+  h3 { 
+    font-size: 1.125rem; 
+    line-height: 1.3; 
+}
+
+  h1, h2, h3 {
+    text-wrap: balance;          /* não deixa 1 palavra órfã na última linha */
+    letter-spacing: -.01em;
+  }
+
+  p { 
+    max-width: var(--largura-texto); 
+    text-wrap: pretty; 
+}
+
+  /* imagem nunca estoura o container */
+  img { 
+    max-width: 100%; 
+    height: auto; 
+    display: block; 
+}
+
+  /* link: sublinhado só no hover, nunca "azul de navegador" */
+  a {
+    color: var(--cor-marca);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color var(--transicao);
+  }
+
+  a:not(:hover):not(:focus-visible) { 
+    text-decoration: none; 
+}
+
+  /* controles herdam a fonte do site em vez da fonte do sistema */
+  input, button, select, textarea { 
+    font: inherit; 
+    color: inherit; 
+}
+
+  /* ⭐ o foco: aparece pra quem usa teclado, some no clique de mouse.
+     NUNCA escreva outline: none sem colocar um substituto. */
+  :focus-visible {
+    outline: 2px solid var(--cor-marca);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}

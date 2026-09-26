@@ -1,0 +1,6 @@
+/* O <app-cabecalho> é só um embrulho: quem tem papel é o <header> lá dentro.
+   display: contents tira a caixa do embrulho do layout, e o <header> volta a
+   ser filho direto do grid — que é o que o position: sticky precisa. */
+:host {
+  display: contents;
+}

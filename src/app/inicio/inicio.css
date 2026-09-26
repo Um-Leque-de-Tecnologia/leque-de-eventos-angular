@@ -1,0 +1,5 @@
+/* Sem isto, o h1 e a section viram filhos do <app-inicio>, e o gap do
+   .conteudo (layout.css) passa a separar o embrulho, não os dois. */
+:host {
+  display: contents;
+}

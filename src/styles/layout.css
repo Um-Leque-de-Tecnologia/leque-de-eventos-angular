@@ -1,0 +1,77 @@
+/* Layout = o esqueleto da página: cabeçalho, trilho central, rodapé.
+   Nada aqui sabe o que é um "card" — isso é assunto de componentes.css. */
+@layer layout {
+
+  /* --- trilho central reaproveitável --------------------------------- */
+  .cabecalho > *,
+  .conteudo,
+  .rodape > * {
+    width: min(100%, var(--largura-pagina));
+    margin-inline: auto;
+  }
+
+  /* --- cabeçalho ------------------------------------------------------ */
+  .cabecalho {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding-inline: var(--esp-3);
+    border-bottom: var(--borda);
+    background: color-mix(in srgb, var(--cor-fundo) 88%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .cabecalho > * {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--esp-2);
+    min-height: 3.5rem;
+  }
+
+  /* o "logo" é texto: cor do texto, não cor de link */
+  .cabecalho a[href="/"] {
+    color: var(--cor-texto);
+    font-size: 1.05rem;
+  }
+
+  .cabecalho nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--esp-1) var(--esp-3);
+  }
+
+  .cabecalho nav a {
+    color: var(--cor-texto-2);
+    padding-block: var(--esp-1);
+  }
+  .cabecalho nav a:hover,
+  .cabecalho nav a[aria-current="page"] { color: var(--cor-marca); }
+
+  /* --- conteúdo ------------------------------------------------------- */
+  .conteudo {
+    /* ritmo vertical: uma regra só, em vez de margin em cada filho */
+    display: flex;
+    flex-direction: column;
+    gap: var(--esp-4);
+    padding: var(--esp-4) var(--esp-3) var(--esp-5);
+  }
+
+  /* dentro de uma section, o espaçamento é menor que entre sections */
+  .conteudo section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--esp-3);
+  }
+
+  /* --- rodapé --------------------------------------------------------- */
+  .rodape {
+    padding: var(--esp-3);
+    text-align: center;   /* o 'p' já é centrado pelo trilho; deixe isso explícito */
+    border-top: var(--borda);
+    background: var(--cor-superficie);
+    color: var(--cor-texto-2);
+    font-size: .9rem;
+  }
+}

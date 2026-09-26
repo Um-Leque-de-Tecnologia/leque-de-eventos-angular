@@ -1,0 +1,30 @@
+/* Utilitários: fazem UMA coisa. Camada mais alta = vencem o componente. */
+@layer utilitarios {
+
+  /* só pra leitor de tela: some da tela, continua no acessibilidade tree.
+     (não use display:none — isso apaga também pro leitor) */
+  .so-leitor {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* pular pro conteúdo: escondido até receber foco pelo teclado */
+  .pular {
+    position: absolute;
+    inset-inline-start: var(--esp-2);
+    inset-block-start: var(--esp-2);
+    z-index: 100;
+    padding: var(--esp-1) var(--esp-2);
+    border-radius: var(--raio-sm);
+    background: var(--cor-marca);
+    color: var(--cor-marca-txt);
+    text-decoration: none;
+    transform: translateY(-200%);
+    transition: transform var(--transicao);
+  }
+  .pular:focus-visible { transform: translateY(0); }
+}

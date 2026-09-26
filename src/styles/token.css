@@ -1,0 +1,88 @@
+@layer base {
+  :root {
+    /* faz o NAVEGADOR adaptar scrollbar, inputs e seletor de data.
+       sem isto, site escuro com input branco brilhante. */
+    color-scheme: light dark;
+
+    /* --- cor: nomeada pelo PAPEL, não pela cor --- */
+    --cor-fundo:      #ffffff;
+    --cor-superficie: #f4f4f5;
+    --cor-elevado:    #ffffff;
+    --cor-texto:      #18181b;
+    --cor-texto-2:    #52525b;
+    --cor-marca:      #6d28d9;
+    --cor-marca-txt:  #ffffff;
+    --cor-ok:         #15803d;
+    --cor-ok-fundo:   rgb(21 128 61 / .10);
+    --cor-linha:      rgb(0 0 0 / .12);
+    --sombra:         0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);
+
+    /* --- espaço: uma escala, sem valor mágico --- */
+    --esp-1: .5rem;
+    --esp-2: 1rem;
+    --esp-3: 1.5rem;
+    --esp-4: 2.5rem;
+    --esp-5: 4rem;
+
+    /* --- forma --- */
+    --raio:    12px;
+    --raio-sm: 8px;
+    --raio-pill: 999px;
+    --borda:   1px solid var(--cor-linha);
+
+    /* --- medidas --- */
+    --largura-texto:  70ch;   /* medida de leitura */
+    --largura-pagina: 72rem;  /* trilho central do site */
+    --card-min:       clamp(16rem, 30vw, 22rem); /* menor card antes de quebrar coluna */
+
+    /* --- movimento --- */
+    --transicao: 160ms ease;
+  }
+
+  /* quem prefere escuro no sistema */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --cor-fundo:      #0d0b14;
+      --cor-superficie: #161122;
+      --cor-elevado:    #1d1730;
+      --cor-texto:      #f3f0fa;
+      --cor-texto-2:    #b4aec6;
+      --cor-marca:      #a98ce0;
+      --cor-marca-txt:  #1a1226;
+      --cor-ok:         #5fd08a;
+      --cor-ok-fundo:   rgb(95 208 138 / .12);
+      --cor-linha:      rgb(255 255 255 / .12);
+      --sombra:         0 1px 2px rgb(0 0 0 / .4), 0 8px 24px rgb(0 0 0 / .35);
+    }
+  }
+
+  /* a escolha manual vence as duas de cima (extra do desafio).
+     repete o conjunto INTEIRO: meio-tema deixa texto escuro em fundo escuro. */
+  :root[data-tema="dark"] {
+    color-scheme: dark;
+    --cor-fundo:      #0d0b14;
+    --cor-superficie: #161122;
+    --cor-elevado:    #1d1730;
+    --cor-texto:      #f3f0fa;
+    --cor-texto-2:    #b4aec6;
+    --cor-marca:      #a98ce0;
+    --cor-marca-txt:  #1a1226;
+    --cor-ok:         #5fd08a;
+    --cor-ok-fundo:   rgb(95 208 138 / .12);
+    --cor-linha:      rgb(255 255 255 / .12);
+  }
+
+  :root[data-tema="light"] {
+    color-scheme: light;
+    --cor-fundo:      #ffffff;
+    --cor-superficie: #f4f4f5;
+    --cor-elevado:    #ffffff;
+    --cor-texto:      #18181b;
+    --cor-texto-2:    #52525b;
+    --cor-marca:      #6d28d9;
+    --cor-marca-txt:  #ffffff;
+    --cor-ok:         #15803d;
+    --cor-ok-fundo:   rgb(21 128 61 / .10);
+    --cor-linha:      rgb(0 0 0 / .12);
+  }
+}

@@ -1,0 +1,7 @@
+/* O <app-root> é o novo <body>: o grid de três linhas mora aqui agora.
+   Cabeçalho em cima, conteúdo ocupando o resto, rodapé sempre embaixo. */
+:host {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
+}

@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+/* A ordem da cascata, declarada UMA vez — era o <style> do <head> da entrega 0.
+   O @layer pode vir antes dos @import; qualquer outra regra, não. */
+@layer reset, base, layout, componentes, utilitarios;
+
+@import "./styles/token.css";
+@import "./styles/base.css";
+@import "./styles/layout.css";
+@import "./styles/components.css";
+@import "./styles/utilities.css";

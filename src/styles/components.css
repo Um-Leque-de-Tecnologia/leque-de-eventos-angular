@@ -1,0 +1,212 @@
+@layer componentes {
+
+  /* ================= lista de eventos ================= */
+  .lista-eventos {
+    display: grid;
+    gap: var(--esp-3);
+    list-style: none;
+    padding: 0;
+    /* auto-fill + min() = nunca menos largo que a tela do celular */
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--card-min), 100%), 1fr));
+    align-items: stretch;
+  }
+
+  /* ⚠️ o container é CADA ITEM, não a lista.
+     Se ficasse na <ul>, a query mediria a largura da TELA e todos os cards
+     virariam "capa gigante + texto espremido" numa coluna de 300px. */
+  .lista-eventos > li {
+    container-type: inline-size;
+    container-name: card;
+    display: grid;   /* faz o card esticar até o fim da linha do grid */
+  }
+
+  /* ================= card de evento ================= */
+  .card-evento {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;   /* capa + corpo que ocupa o resto */
+    background: var(--cor-superficie);
+    border: var(--borda);
+    border-radius: var(--raio);
+    overflow: hidden;
+    transition: border-color var(--transicao),
+                box-shadow  var(--transicao),
+                transform   var(--transicao);
+
+    &:hover {
+      border-color: var(--cor-marca);
+      box-shadow: var(--sombra);
+      transform: translateY(-2px);
+    }
+
+    /* o card inteiro vira alvo do clique, sem JS e sem link duplicado no leitor de tela */
+    & h3 a {
+      color: inherit;
+      text-decoration: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+    }
+    & h3 a:hover { color: var(--cor-marca); }
+
+    /* o outline do teclado precisa cercar o card, não o texto */
+    &:has(h3 a:focus-visible) {
+      outline: 2px solid var(--cor-marca);
+      outline-offset: 2px;
+    }
+    & h3 a:focus-visible { outline: none; }
+  }
+
+  .card-evento__capa {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--cor-elevado);
+  }
+
+  .card-evento__corpo {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--esp-1);
+    padding: var(--esp-2) var(--esp-3) var(--esp-3);
+  }
+
+  /* dentro do card a medida de leitura não vale: quem manda é a coluna */
+  .card-evento__corpo p { max-width: none; }
+
+  .card-evento__meta {
+    color: var(--cor-texto-2);
+    font-size: .9rem;
+  }
+
+  .selo-gratuito {
+    /* empurra o selo pro rodapé do card: todos alinham na mesma linha */
+    margin-block-start: auto;
+    padding: .15rem .7rem;
+    border: 1px solid var(--cor-ok);
+    border-radius: var(--raio-pill);
+    background: var(--cor-ok-fundo);
+    color: var(--cor-ok);
+    font-size: .8rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .card-evento:has(.selo-gratuito) { border-color: color-mix(in srgb, var(--cor-ok) 45%, transparent); }
+
+  /* card largo o bastante → capa vira coluna lateral */
+  @container card (min-width: 30rem) {
+    .card-evento {
+      grid-template-columns: minmax(9rem, 34%) 1fr;
+      grid-template-rows: 1fr;
+    }
+    .card-evento__capa { height: 100%; aspect-ratio: auto; }
+    .card-evento__corpo { padding: var(--esp-3); }
+  }
+
+  /* ================= busca ================= */
+  .busca {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--esp-1);
+  }
+
+  .busca input {
+    flex: 1 1 18rem;
+    min-width: 0;
+    padding: .6rem .9rem;
+    border: var(--borda);
+    border-radius: var(--raio-sm);
+    background: var(--cor-superficie);
+  }
+
+  .busca button {
+    padding: .6rem 1.2rem;
+    border: 1px solid transparent;
+    border-radius: var(--raio-sm);
+    background: var(--cor-marca);
+    color: var(--cor-marca-txt);
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter var(--transicao);
+  }
+  .busca button:hover { filter: brightness(1.1); }
+}
+
+/* a camada pode ser reaberta quantas vezes quiser: o navegador junta tudo */
+@layer componentes {
+
+  /* ================= página do evento ================= */
+  .evento {
+    display: flex;
+    flex-direction: column;
+    gap: var(--esp-3);
+    border: var(--borda);
+    border-radius: var(--raio);
+    overflow: hidden;
+    background: var(--cor-superficie);
+    padding-block-end: var(--esp-4);
+  }
+
+  .evento__capa {
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    object-fit: cover;
+    background: var(--cor-elevado);
+  }
+
+  .evento__corpo {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--esp-2);
+    padding-inline: var(--esp-3);
+  }
+
+  .evento__meta {
+    color: var(--cor-texto-2);
+    font-size: 1rem;
+  }
+
+  .evento__acoes { margin-block-start: var(--esp-1); }
+
+  .botao {
+    display: inline-block;
+    padding: .7rem 1.4rem;
+    border-radius: var(--raio-sm);
+    background: var(--cor-marca);
+    color: var(--cor-marca-txt);
+    font-weight: 600;
+    text-decoration: none;
+    transition: filter var(--transicao);
+  }
+  .botao:hover { filter: brightness(1.1); color: var(--cor-marca-txt); }
+
+  /* ================= programação ================= */
+  .programacao {
+    display: grid;
+    /* horário na coluna 1, descrição na 2 — sem tabela e sem float */
+    grid-template-columns: auto 1fr;
+    gap: var(--esp-1) var(--esp-3);
+    align-items: baseline;
+    max-width: var(--largura-texto);
+  }
+
+  .programacao dt {
+    color: var(--cor-texto-2);
+    font-variant-numeric: tabular-nums;  /* horários alinhados na vertical */
+    white-space: nowrap;
+  }
+
+  .programacao dd { margin: 0; }
+
+  /* no celular, empilha: horário em cima, descrição embaixo */
+  @media (width < 30rem) {
+    .programacao { grid-template-columns: 1fr; gap: 0; }
+    .programacao dd { margin-block-end: var(--esp-2); }
+  }
+}

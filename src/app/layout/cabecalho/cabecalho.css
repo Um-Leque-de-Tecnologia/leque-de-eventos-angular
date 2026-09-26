@@ -4,3 +4,18 @@
 :host {
   display: contents;
 }
+
+/* Escopo de estilo: este seletor vira .botao-tema[_ngcontent-…] no navegador.
+   Só existe dentro do cabeçalho — não vaza, e nada de fora vaza pra cá. */
+.botao-tema {
+  padding: var(--esp-1) var(--esp-2);
+  border: var(--borda);
+  border-radius: var(--raio-pill);
+  background: var(--cor-superficie);
+  cursor: pointer;
+}
+
+.botao-tema[aria-pressed='true'] {
+  border-color: var(--cor-marca);
+  color: var(--cor-marca);
+}

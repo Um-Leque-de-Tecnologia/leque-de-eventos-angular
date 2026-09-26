@@ -6,5 +6,9 @@
       <a href="/eventos">Eventos</a>
       <a href="#organizar">Organizar</a>
     </nav>
+
+    <button type="button" class="botao-tema" (click)="alternarTema()" [attr.aria-pressed]="tema() === 'dark'">
+      Tema escuro
+    </button>
   </div>
 </header>

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 
 type Tema = 'light' | 'dark';
 
@@ -18,14 +18,15 @@ export class Cabecalho {
   protected readonly tema = signal<Tema | null>(temaSalvo());
 
   constructor() {
-    const salvo = this.tema();
-    if (salvo) document.documentElement.dataset['tema'] = salvo;
+    effect(() => {
+      const tema = this.tema();
+      if (!tema) return;
+      document.documentElement.dataset['tema'] = tema;
+      localStorage.setItem('tema', tema);
+    });
   }
 
   protected alternarTema(): void {
-    const novo: Tema = this.tema() === 'dark' ? 'light' : 'dark';
-    this.tema.set(novo);
-    document.documentElement.dataset['tema'] = novo;
-    localStorage.setItem('tema', novo);
+    this.tema.update((atual) => (atual === 'dark' ? 'light' : 'dark'));
   }
 }

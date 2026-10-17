@@ -1,0 +1,18 @@
+.lista-eventos {
+  display: grid;
+  gap: var(--esp-3);
+  list-style: none;
+  padding: 0;
+  /* auto-fill + min() = nunca menos largo que a tela do celular */
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--card-min), 100%), 1fr));
+  align-items: stretch;
+}
+
+/* ⚠️ o container é CADA ITEM, não a lista.
+   Se ficasse na <ul>, a query mediria a largura da TELA e todos os cards
+   virariam "capa gigante + texto espremido" numa coluna de 300px. */
+.lista-eventos > li {
+  container-type: inline-size;
+  container-name: card;
+  display: grid;   /* faz o card esticar até o fim da linha do grid */
+}

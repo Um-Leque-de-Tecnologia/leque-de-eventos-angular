@@ -1,0 +1,41 @@
+.busca {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-1);
+}
+
+.busca input {
+  flex: 1 1 18rem;
+  min-width: 0;
+  padding: .6rem .9rem;
+  border: var(--borda);
+  border-radius: var(--raio-sm);
+  background: var(--cor-superficie);
+}
+
+.busca button {
+  padding: .6rem 1.2rem;
+  border: 1px solid transparent;
+  border-radius: var(--raio-sm);
+  background: var(--cor-marca);
+  color: var(--cor-marca-txt);
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter var(--transicao);
+}
+.busca button:hover { filter: brightness(1.1); }
+
+.busca select {
+  padding: .6rem .9rem;
+  border: var(--borda);
+  border-radius: var(--raio-sm);
+  background: var(--cor-superficie);
+}
+
+.busca__check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  white-space: nowrap;
+  cursor: pointer;
+}

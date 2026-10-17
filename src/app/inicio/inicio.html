@@ -2,5 +2,11 @@
 
 <section aria-labelledby="tit-proximos">
   <h2 id="tit-proximos">Próximos eventos</h2>
-  <p>Os cards chegam na aula 04 — com dados, não com HTML copiado oito vezes.</p>
+  <app-lista-eventos [eventos]="destaques()" />
+
+  @defer (on viewport) {
+    <app-catalogo />
+  } @placeholder {
+    <p>Carregando o catálogo completo…</p>
+  }
 </section>

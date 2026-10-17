@@ -1,0 +1,18 @@
+:host {
+  display: contents; 
+}
+
+.situacao {
+  padding: .15rem .7rem;
+  border: var(--borda);
+  border-radius: var(--raio-pill);
+  color: var(--cor-texto-2);
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.situacao--destaque {
+  border-color: var(--cor-marca);
+  color: var(--cor-marca);
+}

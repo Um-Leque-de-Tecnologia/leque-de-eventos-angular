@@ -1,0 +1,23 @@
+<section aria-labelledby="tit-todos">
+  <h2 id="tit-todos">Todos os eventos</h2>
+
+  <app-filtros-eventos 
+    [(busca)]="busca" 
+    [(formato)]="formato" 
+    [(soGratuitos)]="soGratuitos"
+    [(cidade)]="cidade"
+    [cidades]="cidades()"
+   />
+
+  @let lista = visiveis();
+
+  <p aria-live="polite">{{ resumo() }}</p>
+
+  @if (lista.length > 0) {
+    <app-lista-eventos [eventos]="lista" />
+  }  @else {
+    <app-aviso icone="🔍" acao="Limpar filtros" (agir)="limparFiltros()">
+      Nenhum evento com esses filtros. Tente <strong>tirar um deles</strong>.
+    </app-aviso>
+  }
+</section>

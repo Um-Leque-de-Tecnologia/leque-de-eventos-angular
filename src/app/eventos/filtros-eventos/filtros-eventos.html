@@ -1,0 +1,35 @@
+<form class="busca" role="search" (submit)="$event.preventDefault()">
+  <label class="so-leitor" for="q">Buscar eventos</label>
+  <input
+    id="q"
+    type="search"
+    placeholder="Buscar por título ou organizador"
+    #campoBusca
+    [value]="busca()"
+    (input)="busca.set(campoBusca.value)"
+  />
+
+  <label class="so-leitor" for="formato">Formato</label>
+  <select id="formato" #campoFormato (change)="escolherFormato(campoFormato.value)">
+    @for (opcao of opcoesFormato; track opcao) {
+      <option [value]="opcao" [selected]="opcao === formato()">
+        {{ opcao === 'todos' ? 'Todos os formatos' : opcao }}
+      </option>
+    }
+  </select>
+
+   <label class="so-leitor" for="cidade">Cidade</label>
+  <select id="cidade" #campoCidade (change)="cidade.set(campoCidade.value)" [disabled]="cidades().length === 0">
+    <option value="" [selected]="cidade() === ''">Todas as cidades</option>
+    @for (opcao of cidades(); track opcao) {
+      <option [value]="opcao" [selected]="opcao === cidade()">{{ opcao }}</option>
+    }
+  </select>
+
+  <label class="busca__check">
+    <input type="checkbox" #campoGratis [checked]="soGratuitos()" (change)="soGratuitos.set(campoGratis.checked)" />
+    Só gratuitos
+  </label>
+
+  <button type="button" (click)="limpar()">{{ rotuloLimpar() }}</button>
+</form>

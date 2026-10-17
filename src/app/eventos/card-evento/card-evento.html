@@ -1,0 +1,37 @@
+@let e = evento();
+
+<article class="card-evento">
+  <div class="card-evento__corpo">
+    <h3>
+      <!-- aula 06: este href vira [routerLink] -->
+      <a [href]="'/eventos/' + e.slug">{{ e.titulo }}</a>
+    </h3>
+    
+     @switch (situacao()) {
+      @case ('hoje') { <p class="situacao situacao--destaque">Hoje</p> }
+      @case ('acontecendo') { <p class="situacao situacao--destaque">Acontecendo agora</p> }
+      @case ('encerrado') { <p class="situacao">Já aconteceu</p> }
+    }
+
+
+    <p>{{ e.resumo }}</p>
+
+    <p class="card-evento__meta">
+      <time [attr.datetime]="e.inicioEm">{{ e.inicioEm | date: "d 'de' MMMM', 'HH'h'mm" }}</time>
+      @if (e.cidade) {
+        · {{ e.cidade }}
+      }
+      ·
+      @switch (e.formato) {
+        @case ('Presencial') { <span aria-hidden="true">📍</span> }
+        @case ('Online') { <span aria-hidden="true">💻</span> }
+        @case ('Híbrido') { <span aria-hidden="true">🔀</span> }
+      }
+      {{ e.formato }}
+    </p>
+
+    @if (e.gratuito) {
+      <p class="selo-gratuito">Gratuito</p>
+    }
+  </div>
+</article>

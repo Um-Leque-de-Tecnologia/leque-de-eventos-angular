@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.aviso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: var(--esp-3);
+  border: 1px dashed var(--cor-linha);
+  border-radius: var(--raio);
+  background: var(--cor-superficie);
+}
+
+.aviso__icone {
+  font-size: 1.5rem;
+}
+
+.aviso__texto {
+  flex: 1 1 16rem;
+}
+
+.aviso__acao {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--cor-marca);
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--cor-marca);
+  font-weight: 600;
+  cursor: pointer;
+}

@@ -1,0 +1,8 @@
+<div class="aviso">
+  <span class="aviso__icone" aria-hidden="true">{{ icone() }}</span>
+  <!-- o que o pai escrever entre <app-aviso> e </app-aviso> aparece aqui -->
+  <p class="aviso__texto"><ng-content /></p>
+  @if (acao(); as rotulo) {
+    <button type="button" class="aviso__acao" (click)="agir.emit()">{{ rotulo }}</button>
+  }
+</div>

@@ -8,7 +8,7 @@
     </nav>
 
     <button type="button" class="botao-tema" (click)="alternarTema()" [attr.aria-pressed]="tema() === 'dark'">
-      Tema escuro
+      {{ tema() === 'dark' ? 'Tema Claro' : 'Tema Escuro' }}
     </button>
   </div>
 </header>

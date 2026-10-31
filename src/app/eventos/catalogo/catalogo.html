@@ -1,23 +1,32 @@
-<section aria-labelledby="tit-todos">
-  <h2 id="tit-todos">Todos os eventos</h2>
+<!-- agora é uma página: o título dela é o h1 -->
+<h1>Todos os eventos</h1>
 
-  <app-filtros-eventos 
-    [(busca)]="busca" 
-    [(formato)]="formato" 
-    [(soGratuitos)]="soGratuitos"
-    [(cidade)]="cidade"
-    [cidades]="cidades()"
-   />
+<app-filtros-eventos
+  [(busca)]="busca"
+  [(formato)]="formato"
+  [(cidade)]="cidade"
+  [cidades]="cidades()"
+  [(soGratuitos)]="soGratuitos"
+/>
 
+<!-- Três estados, nesta ordem: deu erro, está chegando, chegou. -->
+@if (eventos.error()) {
+  <app-aviso icone="⚠️" acao="Tentar de novo" (agir)="eventos.reload()">
+    Não deu para carregar os eventos. Confira a conexão e tente de novo.
+  </app-aviso>
+} @else if (eventos.isLoading()) {
+  <p role="status">Carregando os eventos…</p>
+} @else {
   @let lista = visiveis();
 
-  <p aria-live="polite">{{ resumo() }}</p>
+  <!-- o resumo vira o título da lista: h1 → h2 → h3 dos cards, sem pular nível -->
+  <h2 aria-live="polite">{{ resumo() }}</h2>
 
   @if (lista.length > 0) {
     <app-lista-eventos [eventos]="lista" />
-  }  @else {
+  } @else {
     <app-aviso icone="🔍" acao="Limpar filtros" (agir)="limparFiltros()">
       Nenhum evento com esses filtros. Tente <strong>tirar um deles</strong>.
     </app-aviso>
   }
-</section>
+}

@@ -1,0 +1,10 @@
+:host {
+  display: contents;
+}
+
+/* nome, descrição e site andam juntos: espaço menor que o do <main> */
+.perfil {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}

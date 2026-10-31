@@ -1,10 +1,14 @@
-<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<a class="pular" href="/#conteudo">Pular para o conteúdo</a>
+
+<p class="carregando" role="status">
+  @if (carregando()) {
+    <span>Carregando a página…</span>
+  }
+</p>
 
 <app-cabecalho />
 
-<main id="conteudo" class="conteudo">
-  <app-inicio />
-
+<main class="conteudo" #conteudo>
   <!-- aula 06: as páginas passam a aparecer aqui, uma por rota -->
   <router-outlet />
 </main>

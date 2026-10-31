@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, computed, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { Cabecalho } from './layout/cabecalho/cabecalho';
-import { Inicio } from './inicio/inicio';
 import { Rodape } from './layout/rodape/rodape';
 
 @Component({
-  imports: [RouterOutlet, Cabecalho, Inicio, Rodape],
+  imports: [RouterOutlet, Cabecalho, Rodape],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
-export class App {}
+export class App {
+  private readonly router = inject(Router);
+
+  protected readonly carregando = computed(() => this.router.currentNavigation() !== null);
+}

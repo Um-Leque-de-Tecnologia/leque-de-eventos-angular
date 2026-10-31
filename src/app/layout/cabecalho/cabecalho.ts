@@ -1,4 +1,5 @@
 import { Component, effect, signal } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 type Tema = 'light' | 'dark';
 
@@ -8,7 +9,7 @@ function temaSalvo(): Tema | null {
 }
 
 @Component({
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   selector: 'app-cabecalho',
   styleUrl: './cabecalho.css',
   templateUrl: './cabecalho.html',

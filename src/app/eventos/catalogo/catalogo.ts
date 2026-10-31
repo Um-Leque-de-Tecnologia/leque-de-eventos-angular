@@ -1,5 +1,4 @@
-import { Component, computed, linkedSignal, signal } from '@angular/core';
-import { EVENTOS } from '../eventos.data';
+import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { aplicarFiltros, cidadesDoFormato } from '../filtros';
 import { Formato, Evento } from '../tipos';
 import { FiltrosEventos } from '../filtros-eventos/filtros-eventos';
@@ -7,6 +6,8 @@ import { ListaEventos } from '../lista-eventos/lista-eventos';
 import { Aviso } from '../../compartilhado/aviso/aviso';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
+import { API_URL } from '../../api';
+import { httpResource } from '@angular/common/http';
 
 @Component({
   imports: [FiltrosEventos, ListaEventos, Aviso],
@@ -15,6 +16,14 @@ import { debounceTime } from 'rxjs';
   templateUrl: './catalogo.html',
 })
 export class Catalogo {
+  private readonly api = inject(API_URL);
+
+  protected readonly eventos = httpResource<Evento[]>(() => `${this.api}/eventos`, {
+    defaultValue: [],
+  });
+
+  private readonly todos = computed(() => (this.eventos.hasValue() ? this.eventos.value() : []));
+
   protected readonly busca = signal('');
   protected readonly formato = signal<Formato | 'todos'>('todos');
   protected readonly soGratuitos = signal(false);
@@ -23,7 +32,7 @@ export class Catalogo {
     initialValue: '',
   });
 
-  protected readonly cidades = computed(() => cidadesDoFormato(EVENTOS, this.formato()));
+  protected readonly cidades = computed(() => cidadesDoFormato(this.todos(), this.formato()));
   
   protected readonly cidade = linkedSignal({
     source: this.cidades,
@@ -32,7 +41,7 @@ export class Catalogo {
   });
   
    protected readonly visiveis = computed(() => {
-    return aplicarFiltros(EVENTOS, {
+    return aplicarFiltros(this.todos(), {
       busca: this.buscaAdiada(),
       formato: this.formato(),
       cidade: this.cidade(),

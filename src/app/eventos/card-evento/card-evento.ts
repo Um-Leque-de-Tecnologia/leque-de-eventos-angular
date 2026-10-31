@@ -3,9 +3,10 @@ import { Evento } from '../tipos';
 import { DatePipe } from '@angular/common';
 import { Relogio } from '../../compartilhado/relogio';
 import { situacaoDoEvento } from '../situacao';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   selector: 'app-card-evento',
   styleUrl: './card-evento.css',
   templateUrl: './card-evento.html',

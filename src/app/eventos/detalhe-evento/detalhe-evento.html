@@ -1,0 +1,44 @@
+@if (evento(); as e) {
+  <!-- um segundo <nav>: o aria-label separa ele do principal -->
+  <nav aria-label="Trilha">
+    <a routerLink="/eventos">← Todos os eventos</a>
+  </nav>
+
+  <article class="evento">
+    <div class="evento__corpo">
+      <h1>{{ e.titulo }}</h1>
+
+      <p class="evento__meta">
+        <time [attr.datetime]="e.inicioEm">{{ e.inicioEm | date: "EEEE, d 'de' MMMM', às' HH'h'mm" }}</time>
+        @if (e.cidade) {
+          · {{ e.cidade }}
+        }
+        · {{ e.formato }}
+      </p>
+
+      <p>{{ e.descricao }}</p>
+
+      <!-- a ficha: cada rótulo com o seu valor. É o que um <dl> descreve. -->
+      <dl class="programacao">
+        <dt>Organiza</dt>
+         <dd><a [routerLink]="['/organizadores', e.organizadorSlug]">{{ e.organizador }}</a></dd>
+        <dt>Área</dt>
+        <dd>{{ e.categoria }}</dd>
+        <dt>Nível</dt>
+        <dd>{{ e.nivel }}</dd>
+        <dt>Duração</dt>
+        <dd>{{ duracao() }}</dd>
+        <dt>Vagas</dt>
+        <dd>{{ e.vagas ?? 'Sem limite' }}</dd>
+        <dt>Investimento</dt>
+        <dd>{{ e.gratuito ? 'Gratuito' : 'Pago' }}</dd>
+      </dl>
+    </div>
+  </article>
+  @if (relacionados().length > 0) {
+    <section aria-labelledby="tit-relacionados">
+      <h2 id="tit-relacionados">Mais eventos de {{ e.categoria }}</h2>
+      <app-lista-eventos [eventos]="relacionados()" />
+    </section>
+  }
+}

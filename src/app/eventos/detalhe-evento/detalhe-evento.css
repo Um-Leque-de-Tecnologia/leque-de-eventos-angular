@@ -1,0 +1,9 @@
+/* nav e article viram filhos diretos do <main>, e o gap dele separa os dois */
+:host {
+  display: contents;
+}
+
+/* o .evento da entrega 0 contava com a capa em cima; sem capa, falta o respiro */
+.evento {
+  padding-block-start: var(--esp-3);
+}

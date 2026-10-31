@@ -1,0 +1,9 @@
+:host {
+  display: contents;
+}
+
+/* o .botao da entrega 0 foi feito para <a>; num <button>, falta tirar a borda */
+.botao {
+  border: 0;
+  cursor: pointer;
+}

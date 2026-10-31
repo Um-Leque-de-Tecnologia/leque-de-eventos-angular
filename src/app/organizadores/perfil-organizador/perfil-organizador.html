@@ -1,0 +1,20 @@
+@if (organizador(); as o) {
+  <nav aria-label="Trilha">
+    <a routerLink="/eventos">← Todos os eventos</a>
+  </nav>
+
+  <header class="perfil">
+    <h1>{{ o.nome }}</h1>
+    <p>{{ o.sobre }}</p>
+    <p><a [href]="o.site">Site de {{ o.nome }}</a></p>
+  </header>
+
+  <section aria-labelledby="tit-eventos-organizador">
+    <h2 id="tit-eventos-organizador">Eventos de {{ o.nome }}</h2>
+    @if (eventos().length > 0) {
+      <app-lista-eventos [eventos]="eventos()" />
+    } @else {
+      <app-aviso icone="📅">Nenhum evento publicado por enquanto.</app-aviso>
+    }
+  </section>
+}

@@ -1,10 +1,9 @@
 <header class="cabecalho">
   <div>
-    <a href="/"><strong>Leque de Eventos</strong></a>
-
+    <a routerLink="/"><strong>Leque de Eventos</strong></a>
+    
     <nav aria-label="Principal">
-      <a href="/eventos">Eventos</a>
-      <a href="#organizar">Organizar</a>
+      <a routerLink="/eventos" routerLinkActive ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: true }">Eventos</a>
     </nav>
 
     <button type="button" class="botao-tema" (click)="alternarTema()" [attr.aria-pressed]="tema() === 'dark'">

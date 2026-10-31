@@ -1,12 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { EVENTOS } from '../eventos/eventos.data';
 import { ListaEventos } from '../eventos/lista-eventos/lista-eventos';
-import { Catalogo } from '../eventos/catalogo/catalogo';
 import { Relogio } from '../compartilhado/relogio';
 import { situacaoDoEvento } from '../eventos/situacao';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [ListaEventos, Catalogo],
+  imports: [ListaEventos, RouterLink],
   selector: 'app-inicio',
   styleUrl: './inicio.css',
   templateUrl: './inicio.html',

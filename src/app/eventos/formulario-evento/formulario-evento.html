@@ -1,0 +1,172 @@
+@if (naoExiste()) {
+  <app-nao-encontrada />
+} @else if (falhou()) {
+  <app-aviso icone="⚠️" acao="Tentar de novo" (agir)="tentarDeNovo()">
+    Não deu para abrir o formulário. Confira a conexão e tente de novo.
+  </app-aviso>
+} @else if (carregando()) {
+  <p role="status">Carregando o formulário…</p>
+} @else {
+  <h1>{{ editando() ? 'Editar evento' : 'Publicar evento' }}</h1>
+
+  <!-- [formRoot]: desliga a validação do navegador e impede que o Enter recarregue a página -->
+  <form class="formulario" [formRoot]="f">
+    <div class="campo">
+      <label for="titulo">Título</label>
+      <!-- [formField] liga o input à ponta da árvore: o que digita vai para o signal, e o que muda no signal aparece aqui -->
+      <input id="titulo" type="text" [formField]="f.titulo" />
+      <app-erros-do-campo [campo]="f.titulo" />
+    </div>
+
+    <div class="campo">
+      <label for="slug">Endereço <small>(/eventos/{{ f.slug().value() || '…' }})</small></label>
+      <input id="slug" type="text" [formField]="f.slug" />
+      @if (f.slug().pending()) {
+        <p class="campo__conferindo" role="status">Conferindo se está livre…</p>
+      }
+      <app-erros-do-campo [campo]="f.slug" />
+    </div>
+
+    <div class="campo">
+      <label for="resumo">Resumo</label>
+      <input id="resumo" type="text" [formField]="f.resumo" />
+      <app-erros-do-campo [campo]="f.resumo" />
+    </div>
+
+    <div class="campo">
+      <label for="descricao">Descrição</label>
+      <textarea id="descricao" rows="5" [formField]="f.descricao"></textarea>
+      <app-erros-do-campo [campo]="f.descricao" />
+    </div>
+
+    <div class="campo">
+      <label for="organizador">Organizador</label>
+      <select id="organizador" [formField]="f.organizadorSlug">
+        <option value="">Escolha…</option>
+        @for (o of organizadores.value(); track o.slug) {
+          <option [value]="o.slug">{{ o.nome }}</option>
+        }
+      </select>
+      <app-erros-do-campo [campo]="f.organizadorSlug" />
+    </div>
+
+    <div class="campo">
+      <label for="categoria">Área</label>
+      <select id="categoria" [formField]="f.categoria">
+        <option value="">Escolha…</option>
+        @for (c of categorias; track c) {
+          <option [value]="c">{{ c }}</option>
+        }
+      </select>
+      <app-erros-do-campo [campo]="f.categoria" />
+    </div>
+
+    <div class="campo">
+      <label for="nivel">Nível</label>
+      <select id="nivel" [formField]="f.nivel">
+        @for (n of niveis; track n) {
+          <option [value]="n">{{ n }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="formato">Formato</label>
+      <select id="formato" [formField]="f.formato">
+        @for (o of formatos; track o) {
+          <option [value]="o">{{ o }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- o hidden() do schema só diz que está escondido. Quem tira da tela é o @if. -->
+    @if (!f.cidade().hidden()) {
+      <div class="campo">
+        <label for="cidade">Cidade</label>
+        <input id="cidade" type="text" [formField]="f.cidade" />
+        <app-erros-do-campo [campo]="f.cidade" />
+      </div>
+    }
+
+    <div class="campo">
+      <label for="inicio">Início</label>
+      <input id="inicio" type="datetime-local" [formField]="f.inicioEm" />
+      <app-erros-do-campo [campo]="f.inicioEm" />
+    </div>
+
+    <div class="campo">
+      <label for="duracao">Duração, em minutos</label>
+      <input id="duracao" type="number" [formField]="f.duracaoMin" />
+      <app-erros-do-campo [campo]="f.duracaoMin" />
+    </div>
+
+    <div class="campo">
+      <label for="vagas">Vagas <small>(vazio: sem limite)</small></label>
+      <input id="vagas" type="number" [formField]="f.vagas" />
+      <app-erros-do-campo [campo]="f.vagas" />
+    </div>
+
+    <label class="campo campo--marcar">
+      <input type="checkbox" [formField]="f.gratuito" />
+      Evento gratuito
+    </label>
+
+    <fieldset class="itens">
+      <legend>Programação <small>(opcional)</small></legend>
+
+      <!-- f.programacao é uma lista de campos: o @for anda nela como num array comum -->
+      @for (item of f.programacao; track item; let i = $index) {
+        <div class="item">
+          <div class="campo">
+            <label [for]="'horario-' + i">Horário</label>
+            <input [id]="'horario-' + i" type="time" [formField]="item.horario" />
+            <app-erros-do-campo [campo]="item.horario" />
+          </div>
+          <div class="campo">
+            <label [for]="'atividade-' + i">Atividade</label>
+            <input [id]="'atividade-' + i" type="text" [formField]="item.atividade" />
+            <app-erros-do-campo [campo]="item.atividade" />
+          </div>
+          <!-- "Remover" repetido não diz nada a quem ouve a tela: o aria-label diz qual -->
+          <button
+            type="button"
+            class="item__remover"
+            [attr.aria-label]="'Remover o item ' + (i + 1) + ' da programação'"
+            (click)="removerItem(i); botaoAdicionar.focus()"
+          >
+            Remover
+          </button>
+        </div>
+      }
+
+      <button type="button" class="itens__adicionar" #botaoAdicionar (click)="adicionarItem()">
+        Adicionar à programação
+      </button>
+    </fieldset>
+
+    <!-- role="alert": o leitor de tela lê na hora o que aparecer aqui dentro -->
+    <div role="alert">
+      @if (erroAoSalvar()) {
+        <app-aviso icone="⚠️">Não deu para salvar. Confira a conexão e tente de novo.</app-aviso>
+      }
+      @if (erroAoRemover()) {
+        <app-aviso icone="⚠️">Não deu para remover. Confira a conexão e tente de novo.</app-aviso>
+      }
+    </div>
+
+    <div class="formulario__acoes">
+      <button type="submit" class="botao" [disabled]="f().submitting()">
+        @if (editando()) {
+          {{ f().submitting() ? 'Salvando…' : 'Salvar alterações' }}
+        } @else {
+          {{ f().submitting() ? 'Publicando…' : 'Publicar evento' }}
+        }
+      </button>
+      @if (editando()) {
+        <button type="button" class="formulario__remover" [disabled]="removendo()" (click)="remover()">
+          {{ removendo() ? 'Removendo…' : 'Remover evento' }}
+        </button>
+      }
+    </div>
+  </form>
+}

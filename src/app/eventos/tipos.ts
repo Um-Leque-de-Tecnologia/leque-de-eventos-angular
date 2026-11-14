@@ -17,4 +17,10 @@ export type Evento = {
   gratuito: boolean;
   vagas: number | null; // "| null": vem sempre, e null quer dizer ilimitado
   nivel: Nivel;
+  programacao?: ItemDaProgramacao[]; // aula 08: os blocos do dia, opcional
 };
+
+export type ItemDaProgramacao = { horario: string; atividade: string };
+
+// O que o app MANDA para a API. O id e o nome do organizador quem põe é ela.
+export type EventoNovo = Omit<Evento, 'id' | 'organizador'>;

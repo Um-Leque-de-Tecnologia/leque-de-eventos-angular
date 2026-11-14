@@ -1,0 +1,121 @@
+.formulario {
+  display: grid;
+  gap: var(--esp-3);
+  max-width: var(--largura-texto);
+}
+
+.campo {
+  display: grid;
+  gap: var(--esp-1);
+}
+
+.campo label {
+  font-weight: 600;
+}
+
+.campo small {
+  font-weight: 400;
+  color: var(--cor-texto-2);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: .6rem .9rem;
+  border: var(--borda);
+  border-radius: var(--raio-sm);
+  background: var(--cor-superficie);
+  color: inherit;
+  font: inherit;
+}
+
+.campo--marcar {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-1);
+  font-weight: 600;
+}
+
+.campo--marcar input {
+  width: auto;
+}
+
+.campo__conferindo {
+  margin: 0;
+  color: var(--cor-texto-2);
+  font-size: .95em;
+}
+
+.formulario__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+}
+
+.formulario__acoes button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.formulario__acoes button:disabled {
+  opacity: .6;
+  cursor: progress;
+}
+
+.itens {
+  display: grid;
+  gap: var(--esp-2);
+  padding: var(--esp-2);
+  border: var(--borda);
+  border-radius: var(--raio-sm);
+}
+
+.itens legend {
+  padding-inline: var(--esp-1);
+  font-weight: 600;
+}
+
+.itens small {
+  font-weight: 400;
+  color: var(--cor-texto-2);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 8rem 1fr auto;
+  gap: var(--esp-2);
+  align-items: start;
+}
+
+/* o botão desce até a linha do input, passando o rótulo */
+.item__remover {
+  margin-top: 1.9rem;
+}
+
+@media (max-width: 34rem) {
+  .item { grid-template-columns: 1fr; }
+  .item__remover { margin-top: 0; justify-self: start; }
+}
+
+.item__remover,
+.itens__adicionar {
+  justify-self: start;
+  padding: .5rem 1rem;
+  border: var(--borda);
+  border-radius: var(--raio-sm);
+  background: var(--cor-superficie);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.formulario__remover {
+  padding: .7rem 1.4rem;
+  border: 1px solid var(--cor-erro) !important;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--cor-erro);
+  font-weight: 600;
+}

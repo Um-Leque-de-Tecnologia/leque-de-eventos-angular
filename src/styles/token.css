@@ -12,8 +12,9 @@
     --cor-texto-2:    #52525b;
     --cor-marca:      #6d28d9;
     --cor-marca-txt:  #ffffff;
-    --cor-ok:         #15803d;
+    --cor-ok:         #166534; /* #15803d dava 4:1 no selo; o axe pede 4,5:1 */
     --cor-ok-fundo:   rgb(21 128 61 / .10);
+    --cor-erro:       #b91c1c;
     --cor-linha:      rgb(0 0 0 / .12);
     --sombra:         0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);
 
@@ -51,6 +52,7 @@
       --cor-marca-txt:  #1a1226;
       --cor-ok:         #5fd08a;
       --cor-ok-fundo:   rgb(95 208 138 / .12);
+      --cor-erro:       #fca5a5;
       --cor-linha:      rgb(255 255 255 / .12);
       --sombra:         0 1px 2px rgb(0 0 0 / .4), 0 8px 24px rgb(0 0 0 / .35);
     }
@@ -69,6 +71,7 @@
     --cor-marca-txt:  #1a1226;
     --cor-ok:         #5fd08a;
     --cor-ok-fundo:   rgb(95 208 138 / .12);
+    --cor-erro:       #fca5a5;
     --cor-linha:      rgb(255 255 255 / .12);
   }
 
@@ -81,8 +84,9 @@
     --cor-texto-2:    #52525b;
     --cor-marca:      #6d28d9;
     --cor-marca-txt:  #ffffff;
-    --cor-ok:         #15803d;
+    --cor-ok:         #166534; /* #15803d dava 4:1 no selo; o axe pede 4,5:1 */
     --cor-ok-fundo:   rgb(21 128 61 / .10);
+    --cor-erro:       #b91c1c;
     --cor-linha:      rgb(0 0 0 / .12);
   }
 }

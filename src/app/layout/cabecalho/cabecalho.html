@@ -8,7 +8,7 @@
       <a routerLink="/eventos" routerLinkActive ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: true }">
         Eventos
       </a>
-      <!-- aula 08: o "Organizar" volta, apontando para /eventos/novo -->
+      <a routerLink="/eventos/novo" routerLinkActive ariaCurrentWhenActive="page">Organizar</a>
     </nav>
 
     <button type="button" class="botao-tema" (click)="alternarTema()" [attr.aria-pressed]="tema() === 'dark'">

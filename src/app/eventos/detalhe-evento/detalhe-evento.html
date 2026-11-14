@@ -2,6 +2,7 @@
   <!-- um segundo <nav>: o aria-label separa ele do principal -->
   <nav aria-label="Trilha">
     <a routerLink="/eventos">← Todos os eventos</a>
+    · <a [routerLink]="['/eventos', e.slug, 'editar']">Editar este evento</a>
   </nav>
 
   <article class="evento">
@@ -33,6 +34,16 @@
         <dt>Investimento</dt>
         <dd>{{ e.gratuito ? 'Gratuito' : 'Pago' }}</dd>
       </dl>
+
+      @if (e.programacao?.length) {
+        <h2>Programação</h2>
+        <dl class="programacao">
+          @for (item of e.programacao; track $index) {
+            <dt>{{ item.horario }}</dt>
+            <dd>{{ item.atividade }}</dd>
+          }
+        </dl>
+      }
     </div>
   </article>
 

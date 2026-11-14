@@ -12,7 +12,9 @@ describe('Inicio', () => {
 
     fixture = TestBed.createComponent(Inicio);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    // whenStable() esperaria o pedido à API — que no teste ninguém responde.
+    // detectChanges() desenha uma vez e segue.
+    fixture.detectChanges();
   });
 
   it('should create', () => {

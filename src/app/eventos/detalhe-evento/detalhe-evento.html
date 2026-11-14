@@ -1,4 +1,4 @@
-@if (evento(); as e) {
+@if (atual(); as e) {
   <!-- um segundo <nav>: o aria-label separa ele do principal -->
   <nav aria-label="Trilha">
     <a routerLink="/eventos">← Todos os eventos</a>
@@ -42,4 +42,13 @@
       <app-lista-eventos [eventos]="relacionados()" />
     </section>
   }
+} @else if (naoExiste()) {
+  <!-- a API disse 404: o evento não existe, e a página de não encontrada aparece aqui mesmo -->
+  <app-nao-encontrada />
+} @else if (evento.error()) {
+  <app-aviso icone="⚠️" acao="Tentar de novo" (agir)="evento.reload()">
+    Não deu para carregar este evento. Confira a conexão e tente de novo.
+  </app-aviso>
+} @else {
+  <p role="status">Carregando o evento…</p>
 }

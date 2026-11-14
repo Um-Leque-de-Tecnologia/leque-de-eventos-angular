@@ -1,12 +1,13 @@
-import { Component, computed, linkedSignal, signal } from '@angular/core';
+import { httpResource } from '@angular/common/http';
+import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
+import { API_URL } from '../../api';
 import { Aviso } from '../../compartilhado/aviso/aviso';
-import { EVENTOS } from '../eventos.data';
 import { aplicarFiltros, cidadesDoFormato } from '../filtros';
 import { FiltrosEventos } from '../filtros-eventos/filtros-eventos';
 import { ListaEventos } from '../lista-eventos/lista-eventos';
-import type { Formato } from '../tipos';
+import type { Evento, Formato } from '../tipos';
 
 @Component({
   imports: [FiltrosEventos, ListaEventos, Aviso],
@@ -15,6 +16,20 @@ import type { Formato } from '../tipos';
   templateUrl: './catalogo.html',
 })
 export class Catalogo {
+  private readonly api = inject(API_URL);
+
+  // Os eventos agora vêm da API. httpResource é um signal que sabe esperar:
+  // value(), isLoading(), error() — e um reload() para tentar de novo.
+  // defaultValue: enquanto a resposta não chega, a lista é vazia, e não
+  // undefined — o resto do componente não precisa de "?" em todo lugar.
+  protected readonly eventos = httpResource<Evento[]>(() => `${this.api}/eventos`, {
+    defaultValue: [],
+  });
+
+  // A lista que o resto do componente lê. Em estado de erro, value() LANÇA
+  // em vez de devolver alguma coisa — então pergunta antes, com hasValue().
+  private readonly todos = computed(() => (this.eventos.hasValue() ? this.eventos.value() : []));
+
   // O estado dos filtros mora AQUI. O FiltrosEventos só edita, via model().
   protected readonly busca = signal('');
   protected readonly formato = signal<Formato | 'todos'>('todos');
@@ -26,8 +41,9 @@ export class Catalogo {
     initialValue: '',
   });
 
-  // As opções do select de cidade dependem do formato escolhido.
-  protected readonly cidades = computed(() => cidadesDoFormato(EVENTOS, this.formato()));
+  // As opções do select de cidade dependem do formato escolhido — e dos
+  // eventos que chegaram. Quando a resposta chega, a conta se refaz sozinha.
+  protected readonly cidades = computed(() => cidadesDoFormato(this.todos(), this.formato()));
 
   // A cidade escolhida acompanha as opções: se ela some da lista, volta para
   // "todas"; se continua lá, fica. E a pessoa ainda pode escolher (set).
@@ -37,8 +53,9 @@ export class Catalogo {
       anterior && cidades.includes(anterior.value) ? anterior.value : '',
   });
 
+  // Derivado: o mesmo de antes. Só trocou o EVENTOS fixo pela lista que chegou.
   protected readonly visiveis = computed(() => {
-    return aplicarFiltros(EVENTOS, {
+    return aplicarFiltros(this.todos(), {
       busca: this.buscaAdiada(),
       formato: this.formato(),
       cidade: this.cidade(),

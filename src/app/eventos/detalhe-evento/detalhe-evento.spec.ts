@@ -15,7 +15,9 @@ describe('DetalheEvento', () => {
     component = fixture.componentInstance;
     // na aplicação, quem preenche o slug é a rota; no teste, somos nós
     fixture.componentRef.setInput('slug', EVENTOS[0].slug);
-    await fixture.whenStable();
+    // whenStable() esperaria o pedido à API — que no teste ninguém responde.
+    // detectChanges() desenha uma vez e segue.
+    fixture.detectChanges();
   });
 
   it('should create', () => {

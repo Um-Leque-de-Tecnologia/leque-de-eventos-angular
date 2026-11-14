@@ -1,7 +1,7 @@
 import type { Evento } from './tipos';
 
-// PROVISÓRIO: na aula 07 os eventos passam a vir por HTTP (httpResource), e
-// este arquivo fica só para os testes.
+// PROVISÓRIO desde a aula 07: a aplicação lê os eventos da API. Este arquivo
+// fica porque alguns testes ainda usam estes dados.
 export const EVENTOS: readonly Evento[] = [
   {
     id: '1',

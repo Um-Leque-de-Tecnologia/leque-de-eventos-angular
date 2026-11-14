@@ -3,3 +3,9 @@
 :host {
   display: contents;
 }
+
+.capa {
+  width: 100%;
+  height: auto;
+  border-radius: var(--raio);
+}

@@ -1,29 +1,10 @@
 import { HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { DeferBlockBehavior, TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from './app.routes';
-import type { Evento } from './eventos/tipos';
-import { ORGANIZADORES } from './organizadores/organizadores.data';
-
-// Um evento só do teste: o teste não depende dos dados de ninguém.
-const EVENTO: Evento = {
-  id: 't1',
-  slug: 'evento-de-teste',
-  titulo: 'Evento de teste',
-  resumo: 'Um resumo.',
-  descricao: 'Uma descrição.',
-  organizador: 'Turma',
-  organizadorSlug: 'turma',
-  categoria: 'Front-end',
-  formato: 'Online',
-  inicioEm: '2026-11-14T10:00',
-  duracaoMin: 90,
-  gratuito: true,
-  vagas: null,
-  nivel: 'Iniciante',
-};
+import { EVENTO_DE_TESTE as EVENTO, ORGANIZADOR_DE_TESTE } from './testes/exemplos';
 
 // Espera alguém pedir a URL e responde por ela. O pedido sai depois de
 // carregar a rota lazy, então ele pode demorar alguns instantes a aparecer.
@@ -47,6 +28,9 @@ describe('rotas', () => {
   beforeEach(async () => {
     TestBed.configureTestingModule({
       providers: [provideRouter(routes, withComponentInputBinding())],
+      // O @defer fica no placeholder até o teste mandar. O jsdom não tem
+      // IntersectionObserver: o "on viewport" quebraria aqui.
+      deferBlockBehavior: DeferBlockBehavior.Manual,
     });
     harness = await RouterTestingHarness.create();
   });
@@ -63,7 +47,6 @@ describe('rotas', () => {
     await responder(`/api/eventos/${EVENTO.slug}`, EVENTO); // o resolver do título
     await navegacao;
     await responder(`/api/eventos/${EVENTO.slug}`, EVENTO); // o httpResource do detalhe
-    await responder('/api/eventos?categoria=Front-end', []); // os da mesma área
     await harness.fixture.whenStable();
     expect(h1()).toBe(EVENTO.titulo);
     expect(TestBed.inject(Title).getTitle()).toBe(`${EVENTO.titulo} · Leque de Eventos`);
@@ -81,7 +64,7 @@ describe('rotas', () => {
   });
 
   it('/organizadores/:slug abre o organizador', async () => {
-    const organizador = ORGANIZADORES[0];
+    const organizador = ORGANIZADOR_DE_TESTE;
     const navegacao = harness.navigateByUrl(`/organizadores/${organizador.slug}`);
     await responder(`/api/organizadores/${organizador.slug}`, organizador); // o resolver do título
     await navegacao;
@@ -89,5 +72,6 @@ describe('rotas', () => {
     await responder(`/api/organizadores/${organizador.slug}/eventos`, [EVENTO]); // os eventos dele
     await harness.fixture.whenStable();
     expect(h1()).toBe(organizador.nome);
+    expect(TestBed.inject(Title).getTitle()).toBe(`${organizador.nome} · Leque de Eventos`);
   });
 });

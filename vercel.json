@@ -1,0 +1,4 @@
+{
+  "outputDirectory": "dist/leque-de-eventos-angular/browser",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}

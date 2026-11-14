@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { httpResource } from '@angular/common/http';
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -8,7 +9,7 @@ import { situacaoDoEvento } from '../eventos/situacao';
 import type { Evento } from '../eventos/tipos';
 
 @Component({
-  imports: [ListaEventos, RouterLink],
+  imports: [ListaEventos, NgOptimizedImage, RouterLink],
   selector: 'app-inicio',
   styleUrl: './inicio.css',
   templateUrl: './inicio.html',

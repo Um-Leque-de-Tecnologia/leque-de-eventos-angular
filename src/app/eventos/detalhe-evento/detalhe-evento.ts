@@ -5,11 +5,11 @@ import { RouterLink } from '@angular/router';
 import { API_URL } from '../../api';
 import { Aviso } from '../../compartilhado/aviso/aviso';
 import { NaoEncontrada } from '../../nao-encontrada/nao-encontrada';
-import { ListaEventos } from '../lista-eventos/lista-eventos';
+import { RelacionadosEvento } from '../relacionados-evento/relacionados-evento';
 import type { Evento } from '../tipos';
 
 @Component({
-  imports: [DatePipe, RouterLink, ListaEventos, Aviso, NaoEncontrada],
+  imports: [DatePipe, RouterLink, RelacionadosEvento, Aviso, NaoEncontrada],
   selector: 'app-detalhe-evento',
   styleUrl: './detalhe-evento.css',
   templateUrl: './detalhe-evento.html',
@@ -44,19 +44,4 @@ export class DetalheEvento {
     if (horas === 0) return `${minutos} min`;
     return minutos === 0 ? `${horas}h` : `${horas}h${String(minutos).padStart(2, '0')}`;
   });
-
-  // Uma busca que depende da outra: só pergunta pela área quando o evento
-  // chegou. URL undefined = o recurso fica parado, sem pedir nada.
-  private readonly daArea = httpResource<Evento[]>(
-    () => {
-      const atual = this.atual();
-      return atual ? `${this.api}/eventos?categoria=${encodeURIComponent(atual.categoria)}` : undefined;
-    },
-    { defaultValue: [] },
-  );
-
-  // Até três eventos da mesma área, tirando este.
-  protected readonly relacionados = computed(() =>
-    (this.daArea.hasValue() ? this.daArea.value() : []).filter((e) => e.slug !== this.slug()).slice(0, 3),
-  );
 }

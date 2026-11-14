@@ -47,11 +47,17 @@
     </div>
   </article>
 
-  @if (relacionados().length > 0) {
-    <section aria-labelledby="tit-relacionados">
-      <h2 id="tit-relacionados">Mais eventos de {{ e.categoria }}</h2>
-      <app-lista-eventos [eventos]="relacionados()" />
-    </section>
+  <!-- on viewport: só carrega quando o placeholder entra na tela.
+       prefetch on idle: o ARQUIVO já vem antes, quando o navegador está à toa.
+       O pedido à API, que nasce com o componente, espera até a pessoa rolar. -->
+  @defer (on viewport; prefetch on idle) {
+    <app-relacionados-evento [categoria]="e.categoria" [slug]="e.slug" />
+  } @placeholder {
+    <p class="relacionados-espera">Mais eventos de {{ e.categoria }} aparecem aqui.</p>
+  } @loading (after 150ms; minimum 300ms) {
+    <p role="status">Carregando mais eventos…</p>
+  } @error {
+    <p>Não deu para carregar mais eventos agora.</p>
   }
 } @else if (naoExiste()) {
   <!-- a API disse 404: o evento não existe, e a página de não encontrada aparece aqui mesmo -->

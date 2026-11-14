@@ -7,3 +7,8 @@
 .evento {
   padding-block-start: var(--esp-3);
 }
+
+/* o placeholder do @defer: discreto, mas ocupa o lugar da lista que vem */
+.relacionados-espera {
+  color: var(--cor-texto-2);
+}

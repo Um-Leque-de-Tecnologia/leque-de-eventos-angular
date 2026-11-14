@@ -1,9 +1,9 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Relogio } from '../compartilhado/relogio';
 import { EVENTOS } from '../eventos/eventos.data';
 import { ListaEventos } from '../eventos/lista-eventos/lista-eventos';
-import { Relogio } from '../compartilhado/relogio';
 import { situacaoDoEvento } from '../eventos/situacao';
-import { RouterLink } from '@angular/router';
 
 @Component({
   imports: [ListaEventos, RouterLink],
@@ -12,6 +12,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './inicio.html',
 })
 export class Inicio {
+  // O mesmo relógio dos cards: a home e o catálogo concordam sobre "agora".
   private readonly agora = inject(Relogio).agora;
 
   // Os três próximos que ainda não acabaram. Quando um termina, sai sozinho.

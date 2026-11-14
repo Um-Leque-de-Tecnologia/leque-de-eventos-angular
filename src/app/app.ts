@@ -12,5 +12,7 @@ import { Rodape } from './layout/rodape/rodape';
 export class App {
   private readonly router = inject(Router);
 
+  // currentNavigation() é um signal: a navegação em andamento, ou null.
+  // Enquanto o arquivo de uma rota lazy está chegando, ele não é null.
   protected readonly carregando = computed(() => this.router.currentNavigation() !== null);
 }

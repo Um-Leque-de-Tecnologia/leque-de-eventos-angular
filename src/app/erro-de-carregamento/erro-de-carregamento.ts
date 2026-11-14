@@ -9,6 +9,8 @@ import { Component, DOCUMENT, inject } from '@angular/core';
 export class ErroDeCarregamento {
   private readonly documento = inject(DOCUMENT);
 
+  // Recarregar a aplicação inteira é o conserto: o navegador guarda a falha
+  // do arquivo da rota, e só esquece dela num recarregamento.
   protected recarregar(): void {
     this.documento.location.reload();
   }

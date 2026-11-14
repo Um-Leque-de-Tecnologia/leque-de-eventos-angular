@@ -19,6 +19,8 @@ export class Cabecalho {
   protected readonly tema = signal<Tema | null>(temaSalvo());
 
   constructor() {
+    // Tudo o que o tema faz FORA do template, num lugar só. Roda uma vez no
+    // começo e de novo toda vez que tema() muda — ninguém precisa lembrar.
     effect(() => {
       const tema = this.tema();
       if (!tema) return;

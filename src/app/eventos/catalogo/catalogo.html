@@ -9,24 +9,15 @@
   [(soGratuitos)]="soGratuitos"
 />
 
-<!-- Três estados, nesta ordem: deu erro, está chegando, chegou. -->
-@if (eventos.error()) {
-  <app-aviso icone="⚠️" acao="Tentar de novo" (agir)="eventos.reload()">
-    Não deu para carregar os eventos. Confira a conexão e tente de novo.
-  </app-aviso>
-} @else if (eventos.isLoading()) {
-  <p role="status">Carregando os eventos…</p>
+@let lista = visiveis();
+
+<!-- o resumo vira o título da lista: h1 → h2 → h3 dos cards, sem pular nível -->
+<h2 aria-live="polite">{{ resumo() }}</h2>
+
+@if (lista.length > 0) {
+  <app-lista-eventos [eventos]="lista" />
 } @else {
-  @let lista = visiveis();
-
-  <!-- o resumo vira o título da lista: h1 → h2 → h3 dos cards, sem pular nível -->
-  <h2 aria-live="polite">{{ resumo() }}</h2>
-
-  @if (lista.length > 0) {
-    <app-lista-eventos [eventos]="lista" />
-  } @else {
-    <app-aviso icone="🔍" acao="Limpar filtros" (agir)="limparFiltros()">
-      Nenhum evento com esses filtros. Tente <strong>tirar um deles</strong>.
-    </app-aviso>
-  }
+  <app-aviso icone="🔍" acao="Limpar filtros" (agir)="limparFiltros()">
+    Nenhum evento com esses filtros. Tente <strong>tirar um deles</strong>.
+  </app-aviso>
 }

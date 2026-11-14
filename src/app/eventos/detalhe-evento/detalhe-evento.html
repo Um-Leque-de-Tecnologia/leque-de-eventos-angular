@@ -21,7 +21,7 @@
       <!-- a ficha: cada rótulo com o seu valor. É o que um <dl> descreve. -->
       <dl class="programacao">
         <dt>Organiza</dt>
-         <dd><a [routerLink]="['/organizadores', e.organizadorSlug]">{{ e.organizador }}</a></dd>
+        <dd><a [routerLink]="['/organizadores', e.organizadorSlug]">{{ e.organizador }}</a></dd>
         <dt>Área</dt>
         <dd>{{ e.categoria }}</dd>
         <dt>Nível</dt>
@@ -35,6 +35,7 @@
       </dl>
     </div>
   </article>
+
   @if (relacionados().length > 0) {
     <section aria-labelledby="tit-relacionados">
       <h2 id="tit-relacionados">Mais eventos de {{ e.categoria }}</h2>

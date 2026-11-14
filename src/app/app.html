@@ -1,5 +1,8 @@
-<a class="pular" href="/#conteudo">Pular para o conteúdo</a>
+<!-- Com rotas, href="#conteudo" vira "/#conteudo" (por causa do <base href="/">)
+     e leva para a home. O clique passa a levar o foco direto para o <main>. -->
+<a class="pular" href="#conteudo" (click)="$event.preventDefault(); conteudo.focus()">Pular para o conteúdo</a>
 
+<!-- role="status": o leitor de tela lê o que aparecer aqui dentro -->
 <p class="carregando" role="status">
   @if (carregando()) {
     <span>Carregando a página…</span>
@@ -8,8 +11,9 @@
 
 <app-cabecalho />
 
-<main class="conteudo" #conteudo>
-  <!-- aula 06: as páginas passam a aparecer aqui, uma por rota -->
+<!-- tabindex="-1": o <main> pode receber o foco pelo código, mas o Tab não para nele -->
+<main id="conteudo" class="conteudo" tabindex="-1" #conteudo>
+  <!-- a página do endereço atual aparece aqui -->
   <router-outlet />
 </main>
 

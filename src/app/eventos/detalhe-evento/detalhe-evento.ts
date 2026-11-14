@@ -27,7 +27,9 @@ export class DetalheEvento {
     return minutos === 0 ? `${horas}h` : `${horas}h${String(minutos).padStart(2, '0')}`;
   });
 
-   protected readonly relacionados = computed(() => {
+  // Até três eventos da mesma área, tirando este. Também depende do slug:
+  // trocou o evento, troca a lista.
+  protected readonly relacionados = computed(() => {
     const atual = this.evento();
     if (!atual) return [];
     return EVENTOS.filter((e) => e.categoria === atual.categoria && e.slug !== atual.slug).slice(0, 3);

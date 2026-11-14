@@ -1,9 +1,14 @@
 <header class="cabecalho">
   <div>
     <a routerLink="/"><strong>Leque de Eventos</strong></a>
-    
+
     <nav aria-label="Principal">
-      <a routerLink="/eventos" routerLinkActive ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: true }">Eventos</a>
+      <!-- aria-current="page" no link da página em que a pessoa está.
+           O CSS da entrega 0 já pinta esse link com a cor da marca. -->
+      <a routerLink="/eventos" routerLinkActive ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: true }">
+        Eventos
+      </a>
+      <!-- aula 08: o "Organizar" volta, apontando para /eventos/novo -->
     </nav>
 
     <button type="button" class="botao-tema" (click)="alternarTema()" [attr.aria-pressed]="tema() === 'dark'">

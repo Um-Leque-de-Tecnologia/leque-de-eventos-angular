@@ -1,22 +1,8 @@
-import { Evento } from "./tipos";
+import type { Evento } from './tipos';
 
+// PROVISÓRIO: na aula 07 os eventos passam a vir por HTTP (httpResource), e
+// este arquivo fica só para os testes.
 export const EVENTOS: readonly Evento[] = [
-    {
-    id: 'teste',
-    slug: 'teste-do-relogio',
-    titulo: 'Teste do relógio',
-    resumo: 'Começa daqui a pouco e dura um minuto.',
-    descricao: '',
-    organizador: 'Turma',
-    organizadorSlug: 'turma',
-    categoria: 'Front-end',
-    formato: 'Online',
-    inicioEm: '2026-10-17T16:10', // ← a data de hoje e a hora daqui a dois minutos
-    duracaoMin: 1,
-    gratuito: true,
-    vagas: null,
-    nivel: 'Iniciante',
-  },
   {
     id: '1',
     slug: 'react-recife-meetup-42',
@@ -151,4 +137,4 @@ export const EVENTOS: readonly Evento[] = [
     vagas: 100,
     nivel: 'Avançado',
   },
-]
+];

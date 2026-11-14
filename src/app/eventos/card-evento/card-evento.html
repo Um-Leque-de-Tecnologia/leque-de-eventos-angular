@@ -3,7 +3,8 @@
 <article class="card-evento">
   <div class="card-evento__corpo">
     <h3>
-       <a [routerLink]="['/eventos', e.slug]">{{ e.titulo }}</a>
+      <!-- ['/eventos', e.slug] vira /eventos/react-recife-meetup-42 -->
+      <a [routerLink]="['/eventos', e.slug]">{{ e.titulo }}</a>
     </h3>
     
      @switch (situacao()) {

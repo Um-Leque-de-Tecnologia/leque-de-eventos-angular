@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { EVENTOS } from '../eventos.data';
 import { DetalheEvento } from './detalhe-evento';
 
 describe('DetalheEvento', () => {
@@ -12,6 +13,8 @@ describe('DetalheEvento', () => {
 
     fixture = TestBed.createComponent(DetalheEvento);
     component = fixture.componentInstance;
+    // na aplicação, quem preenche o slug é a rota; no teste, somos nós
+    fixture.componentRef.setInput('slug', EVENTOS[0].slug);
     await fixture.whenStable();
   });
 

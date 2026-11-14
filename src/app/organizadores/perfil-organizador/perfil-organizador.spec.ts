@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ORGANIZADORES } from '../organizadores.data';
 import { PerfilOrganizador } from './perfil-organizador';
 
 describe('PerfilOrganizador', () => {
@@ -12,6 +13,8 @@ describe('PerfilOrganizador', () => {
 
     fixture = TestBed.createComponent(PerfilOrganizador);
     component = fixture.componentInstance;
+    // na aplicação, quem preenche o slug é a rota; no teste, somos nós
+    fixture.componentRef.setInput('slug', ORGANIZADORES[0].slug);
     await fixture.whenStable();
   });
 

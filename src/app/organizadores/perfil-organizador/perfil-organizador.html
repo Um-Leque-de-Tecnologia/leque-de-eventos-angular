@@ -1,4 +1,4 @@
-@if (organizador(); as o) {
+@if (atual(); as o) {
   <nav aria-label="Trilha">
     <a routerLink="/eventos">← Todos os eventos</a>
   </nav>
@@ -17,4 +17,12 @@
       <app-aviso icone="📅">Nenhum evento publicado por enquanto.</app-aviso>
     }
   </section>
+} @else if (naoExiste()) {
+  <app-nao-encontrada />
+} @else if (organizador.error()) {
+  <app-aviso icone="⚠️" acao="Tentar de novo" (agir)="recarregar()">
+    Não deu para carregar este organizador. Confira a conexão e tente de novo.
+  </app-aviso>
+} @else {
+  <p role="status">Carregando o organizador…</p>
 }

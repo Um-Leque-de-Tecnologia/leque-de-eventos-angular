@@ -1,8 +1,8 @@
 import type { Organizador } from './organizador';
 
-// PROVISÓRIO, como o eventos.data.ts: na aula 07 vem por HTTP.
+// PROVISÓRIO, como o eventos.data.ts: a aplicação lê os organizadores da API.
 // Um organizador para cada organizadorSlug que aparece no eventos.data.ts — o
-// organizadores.data.spec.ts confere.
+// organizadores.data.spec.ts confere. Os testes ainda usam esta lista.
 export const ORGANIZADORES: readonly Organizador[] = [
   {
     slug: 'react-recife',

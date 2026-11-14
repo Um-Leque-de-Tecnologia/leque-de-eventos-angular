@@ -82,7 +82,12 @@ describe('rotas', () => {
 
   it('/organizadores/:slug abre o organizador', async () => {
     const organizador = ORGANIZADORES[0];
-    await harness.navigateByUrl(`/organizadores/${organizador.slug}`);
+    const navegacao = harness.navigateByUrl(`/organizadores/${organizador.slug}`);
+    await responder(`/api/organizadores/${organizador.slug}`, organizador); // o resolver do título
+    await navegacao;
+    await responder(`/api/organizadores/${organizador.slug}`, organizador); // o perfil
+    await responder(`/api/organizadores/${organizador.slug}/eventos`, [EVENTO]); // os eventos dele
+    await harness.fixture.whenStable();
     expect(h1()).toBe(organizador.nome);
   });
 });
